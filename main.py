@@ -15,7 +15,7 @@ beep = lambda: print('\a')
 checks = [lambda s: "am" in s.lower(), lambda s: "5th" in s.lower()]
 (_, username, password, *_) = sys.argv
 (username_element, password_element, login_element) = ("m_login_email", "m_login_password", "u_0_5")
-(story_element) = ("story_body_container")
+(story_elements) = ("story_body_container")
 chrome_driver = os.path.join(os.getcwd(), "chromedriver.exe")
 chrome_arguments = ["--headless", "--window-size=1920x1080"]
 
@@ -35,7 +35,7 @@ with selenium.webdriver.Chrome(chrome_options=chrome_options, executable_path=ch
         clear()
         print("Querying group...")
         driver.get("https://m.facebook.com/groups/blscarpool/") ; time.sleep(6)
-        stories = driver.find_elements_by_class_name(story_element) ; time.sleep(6)
+        stories = driver.find_elements_by_class_name(story_elements) ; time.sleep(6)
         old_len = len(story_store)
         for story in stories:
             story_text = story.text.encode('ascii', 'ignore').decode('ascii', 'ignore')
@@ -45,10 +45,12 @@ with selenium.webdriver.Chrome(chrome_options=chrome_options, executable_path=ch
             print(story_text, end="\n========\n")
         print(f"Number of stories: {len(story_store)}")
         if old_len != len(story_store): beep() ; time.sleep(6) ; beep() ; time.sleep(6) ; beep()
-        time.sleep(6)
+        time.sleep(60)
 print("Done!")
 
 """ NOTES
+http://chromedriver.chromium.org/getting-started/getting-started---android + termux
+
 pipenv --tree
 pipenv shell
 
